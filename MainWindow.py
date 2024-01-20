@@ -302,4 +302,16 @@ class MainWindow(QtWidgets.QMainWindow):
     def closeEvent(self, event):
         self.time_thread.run = False
         self.new_penalty_thread.run = False
+        if self.timekeeper_w.timekeeper.connected:
+            self.timekeeper_w.timekeeper.break_connection = True
+            self.timekeeper_w.timekeeper.connected = False
+            self.ui.timekeeperButton.setText("Start Timekeeper")
+            self.timekeeper_w.timekeeper.disconnect_js()
+        for timer in self.extra_timers:
+            timer.close()
+        if self.scorecrawl_connected:
+            self.disconnect_sc
+        filelist = [ f for f in os.listdir("Output")  ]
+        for f in filelist:
+            os.remove(os.path.join("Output/", f))
         self.close()
