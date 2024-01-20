@@ -10,7 +10,7 @@ class TimekeeperWindow(QDialog):
         self.ui.setupUi(self)
         self.scoreboard = scoreboard
         self.main = main_ui
-        self.timekeeper = Timekeeper(self.scoreboard, self.main)
+        self.timekeeper = Timekeeper()
 
     def connect(self):
         self.scoreboard.time.stop()
