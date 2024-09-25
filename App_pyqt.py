@@ -24,10 +24,11 @@ if __name__ == "__main__":
     open("Output/ScoreRight.txt", "w").write("0")
     open("Output/Gametime.txt", "w").write("00:00")
     open("Output/Gametime.csv", "w").write("Gametime\n00:00")
-    open("Output/Gameinfo.csv", "w").write("Team Left,Score Left,Team Right,Score Right,Overtime Setscore\nTeam A,0,Team B,0,-")
+    open("Output/Gameinfo.csv", "w").write("Team Left,Score Left,Logo Left,Roster Left,Team Right,Score Right,Logo Right,Roster Right,Overtime Setscore\nTeam A,0,Team B,0,-")
     open("Output/OvertimeSetscore.txt", "w").write("-")
     open("quadballlive_api/new_penalty.txt", "w").write("0")
-    open("quadballlive_api/gameidstonames.txt", "w").write("0")
+    open("quadballlive_api/gameidstonames_livestream.txt", "w").write("0")
+    open("quadballlive_api/gameidstonames_scorecrawl.txt", "w").write("0")
     open("quadballlive_api/gameids_scorecrawl.txt", "w").write("0")
     with open("Output/Penalty.csv","w") as file:
         fieldnames = ["Name", "Team", "Reason"]
