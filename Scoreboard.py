@@ -90,10 +90,20 @@ class ScoreBoard:
                 self.oss = overtime_setscore_tk
             
             with open('Output/Gameinfo.csv','w') as file:
-                fieldnames = ["Team Left", "Score Left", "Team Right", "Score Right", "Overtime Setscore"]
+                fieldnames = ["Team Left", "Score Left", "Logo Left", "Roster Left", "Team Right", "Score Right", "Logo Right", "Roster Right", "Overtime Setscore"]
                 writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
                 writer.writeheader()
-                writer.writerow({"Team Left": team_left, "Score Left": score_left, "Team Right": team_right, "Score Right": score_right, "Overtime Setscore": self.oss})
+                writer.writerow({
+                    "Team Left": team_left,
+                    "Score Left": score_left,
+                    "Logo Left": (os.getcwd()+"\\"+self.teamleft.logo).replace("/", "\\"),
+                    "Roster Left": (os.getcwd()+"\\"+self.teamleft.rosterpic).replace("/", "\\"),
+                    "Team Right": team_right,
+                    "Score Right": score_right,
+                    "Logo Right": (os.getcwd()+"\\"+self.teamright.logo).replace("/", "\\"),
+                    "Roster Right": (os.getcwd()+"\\"+self.teamright.rosterpic).replace("/", "\\"),
+                    "Overtime Setscore": self.oss
+                    })
             
         except Exception as e:
             print(e)

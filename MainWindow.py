@@ -271,13 +271,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.scorecrawl_connected = False
 
     def read_gameids_sc(self):
-        open("quadballlive_api/gameidstonames.txt", "w").write("")
-        self.gameidstonames_proc = subprocess.Popen('node .\quadballlive_api\quadballlive_gameidtonames.js')
+        open("quadballlive_api/gameidstonames_scorecrawl.txt", "w").write("")
+        self.gameidstonames_proc = subprocess.Popen('node .\quadballlive_api\quadballlive_gameidtonames.js GameIDs_Scorecrawl.txt gameidstonames_scorecrawl.txt')
         time.sleep(3)
         self.gameidstonames_proc.kill()
         for i in reversed(range(self.ui.verticalLayout_10.count())): 
             self.ui.verticalLayout_10.itemAt(i).widget().setParent(None)
-        with open("quadballlive_api/gameidstonames.txt", encoding="utf-8-sig") as f:
+        with open("quadballlive_api/gameidstonames_scorecrawl.txt", encoding="utf-8-sig") as f:
             self.gameids_list = f.readlines()
         # you may also want to remove whitespace characters like `\n` at the end of each line
         self.gameids_list = [x.strip() for x in self.gameids_list]

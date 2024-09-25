@@ -17,7 +17,6 @@ const __dirname = dirname( fileURLToPath( import.meta.url ) );
 /************************/
 let game_id;
 let game;
-let gameid_file = 'GameIDs.txt';
 let diff_to_server_ms = 0;
 
 
@@ -89,7 +88,7 @@ async function create_socket_connection( code, game_id ) {
 async function save_teamnames(game) {
   if(game) {
     game.forEach(element => {
-      fs.appendFile(join( __dirname, "gameidstonames.txt"), element.id + ": " + element.team.a.name + " - " + element.team.b.name + "\n", (err) => {
+      fs.appendFile(join( __dirname, dstFile), element.id + ": " + element.team.a.name + " - " + element.team.b.name + "\n", (err) => {
         if(err)
           log(err);
       });
@@ -100,7 +99,9 @@ async function save_teamnames(game) {
 /*****************/
 /*** EXECUTION ***/
 /*****************/
-fs.writeFile(join( __dirname, "gameidstonames.txt"), "");
+const srcFile = process.argv[2];
+const dstFile = process.argv[3];
+fs.writeFile(join( __dirname, dstFile), "");
 diff_to_server_ms = await sync_to_server();
-game_id = await read_game_id(gameid_file);
+game_id = await read_game_id(srcFile);
 create_socket_connection( code, game_id );

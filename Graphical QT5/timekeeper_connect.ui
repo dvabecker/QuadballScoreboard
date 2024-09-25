@@ -17,7 +17,10 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QLabel" name="label">
          <property name="font">
@@ -26,31 +29,23 @@
           </font>
          </property>
          <property name="text">
-          <string>Game ID</string>
+          <string>Enter GameID</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="gameID"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
+        <widget class="QComboBox" name="comboBox">
+         <property name="editable">
+          <bool>true</bool>
          </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>Authentifizierung</string>
+          <string>Fetch Games</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="auth"/>
        </item>
       </layout>
      </item>
