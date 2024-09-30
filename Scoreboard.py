@@ -61,7 +61,6 @@ class ScoreBoard:
     def write_all(self):
         '''
         writes everything to the designated files
-        :return:
         '''
         self.write_gameinfo(False, False)
         self.write_penalty()
@@ -138,6 +137,7 @@ class ScoreBoard:
         dr = ImageDraw.Draw(im)
         dr.rectangle([(0, 0), (x, y)], fill=self.teamright.color, outline=None)
         im.save("Output/TeamRightJersey.png")
+
         # write for team left
         im = Image.new("RGBA", (x, y))
         dr = ImageDraw.Draw(im)
