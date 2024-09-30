@@ -122,7 +122,7 @@ class ScoreBoard:
                 os.remove("Output/Card.png")
                 shutil.copyfile("Input/Cards/" + self.penalty["card"], "Output/Card.png")
 
-            # TODO: figure out new penalty behavior
+
             open("quadballlive_api/new_penalty.txt", "w").write("0")
             self.window.ui.new_penalty_label.setText("")
 
