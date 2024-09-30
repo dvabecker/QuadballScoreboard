@@ -70,7 +70,6 @@ class ScoreBoard:
         self.window.update_team_ui()
 
     def write_gameinfo(self, timekeeper_connected, swapped):
-        
         try:
             if (timekeeper_connected):
                 if(swapped):
@@ -90,18 +89,18 @@ class ScoreBoard:
                 self.oss = overtime_setscore_tk
             
             with open('Output/Gameinfo.csv','w') as file:
-                fieldnames = ["Team Left", "Score Left", "Logo Left", "Roster Left", "Team Right", "Score Right", "Logo Right", "Roster Right", "Overtime Setscore"]
+                fieldnames = ["Team Left", "Score Left", "Logo Left", "Logo Scoreboard Left", "Team Right", "Score Right", "Logo Right", "Logo Scoreboard Right", "Overtime Setscore"]
                 writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
                 writer.writeheader()
                 writer.writerow({
                     "Team Left": team_left,
                     "Score Left": score_left,
                     "Logo Left": (os.getcwd()+"\\"+self.teamleft.logo).replace("/", "\\"),
-                    "Roster Left": (os.getcwd()+"\\"+self.teamleft.rosterpic).replace("/", "\\"),
+                    "Logo Scoreboard Left": (os.getcwd()+"\\"+self.teamleft.logo_scoreboard).replace("/", "\\")[:-4]+"left.png",
                     "Team Right": team_right,
                     "Score Right": score_right,
                     "Logo Right": (os.getcwd()+"\\"+self.teamright.logo).replace("/", "\\"),
-                    "Roster Right": (os.getcwd()+"\\"+self.teamright.rosterpic).replace("/", "\\"),
+                    "Logo Scoreboard Right": (os.getcwd()+"\\"+self.teamright.logo_scoreboard).replace("/", "\\")[:-4]+"right.png",
                     "Overtime Setscore": self.oss
                     })
             
@@ -151,24 +150,24 @@ class ScoreBoard:
     def write_logo(self):
         try:
             shutil.copyfile(self.teamleft.logo, "Output/TeamLeftLogo.png")
-            self.teamleft.rosterpic = "Input/TeamrosterPNGs/" + self.teamleft.path + "Left.png"
-            shutil.copyfile(self.teamleft.rosterpic, "Output/TeamLeftRoster.png")
+            self.teamleft.logo_scoreboard = "Input/TeamlogosScoreboard/" + self.teamleft.path + "Left.png"
+            shutil.copyfile(self.teamleft.logo_scoreboard, "Output/TeamlogosScoreboard_left.png")
         except FileExistsError:
             os.remove("Output/TeamLeftLogo.png")
             shutil.copyfile(self.teamleft.logo, "Output/TeamLeftLogo.png")
-            self.teamleft.rosterpic = "Input/TeamrosterPNGs/" + self.teamleft.path + "Left.png"
-            shutil.copyfile(self.teamleft.rosterpic, "Output/TeamLeftRoster.png")
+            self.teamleft.logo_scoreboard = "Input/TeamlogosScoreboard/" + self.teamleft.path + "Left.png"
+            shutil.copyfile(self.teamleft.logo_scoreboard, "Output/TeamlogosScoreboard_left.png")
         except FileNotFoundError as e:
             print(e)
 
         try:
             shutil.copyfile(self.teamright.logo, "Output/TeamRightLogo.png")
-            self.teamright.rosterpic = "Input/TeamrosterPNGs/" + self.teamright.path + "Right.png"
-            shutil.copyfile(self.teamright.rosterpic, "Output/TeamRightRoster.png")
+            self.teamright.logo_scoreboard = "Input/TeamlogosScoreboard/" + self.teamright.path + "Right.png"
+            shutil.copyfile(self.teamright.logo_scoreboard, "Output/TeamlogosScoreboard_right.png")
         except FileExistsError:
             os.remove("Output/TeamRightLogo.png")
             shutil.copyfile(self.teamright.logo, "Output/TeamRightLogo.png")
-            self.teamright.rosterpic = "Input/TeamrosterPNGs/" + self.teamright.path + "Right.png"
-            shutil.copyfile(self.teamright.rosterpic, "Output/TeamRightRoster.png")
+            self.teamright.logo_scoreboard = "Input/TeamlogosScoreboard/" + self.teamright.path + "Right.png"
+            shutil.copyfile(self.teamright.logo_scoreboard, "Output/TeamlogosScoreboard_right.png")
         except FileNotFoundError as e:
             print(e)
