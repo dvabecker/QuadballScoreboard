@@ -87,7 +87,7 @@ class ScoreBoard:
                 self.window.ui.oss_label.setText("Overtime setscore: " + overtime_setscore_tk)
                 self.oss = overtime_setscore_tk
             
-            with open('Output/Gameinfo.csv','w') as file:
+            with open('Output/Gameinfo.csv','w', encoding='utf-8') as file:
                 fieldnames = ["Team Left", "Score Left", "Logo Left", "Logo Scoreboard Left", "Team Right", "Score Right", "Logo Right", "Logo Scoreboard Right", "Overtime Setscore"]
                 writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
                 writer.writeheader()
