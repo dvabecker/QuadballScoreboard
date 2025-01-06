@@ -74,4 +74,3 @@ class SettingsWindow(QDialog):
 
     def swap(self):
         self.scoreboard.swap()
-
