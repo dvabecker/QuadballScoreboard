@@ -22,6 +22,7 @@ if __name__ == "__main__":
     open("Output/RightPath.txt", "w").write("")
     open("Output/ScoreLeft.txt", "w").write("0")
     open("Output/ScoreRight.txt", "w").write("0")
+    open("Output/LastScore.csv", "w").write("Team,Number,Name\n")
     open("Output/Gametime.txt", "w").write("00:00")
     open("Output/Gametime.csv", "w").write("Gametime\n00:00")
     open("Output/Gameinfo.csv", "w").write("Team Left,Score Left,Logo Left,Logo Scoreboard Left,Team Right,Score Right,Logo Right,Logo Scoreboard Right,Overtime Setscore\nTeam A,0,-,-,Team B,0,-,-,-")
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     open("quadballlive_api/gameidstonames_scorecrawl.txt", "w").write("0")
     open("quadballlive_api/gameids_scorecrawl.txt", "w").write("0")
     with open("Output/Penalty.csv","w") as file:
-        fieldnames = ["Name", "Team", "Reason"]
+        fieldnames = ["Name", "Team", "Reason", "Card"]
         writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
         writer.writeheader()
     open("Output/ScoreCrawl.csv", "w").write("Scorecrawl\n")

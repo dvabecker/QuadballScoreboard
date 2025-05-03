@@ -27,6 +27,8 @@ let game_id;
 let overtime_written = false;
 let game;
 let diff_to_server_ms = 0;
+let penalty_before_id = null;
+let last_score_id = null;
 const filenames = [
   'ScoreLeft.txt',
   'ScoreRight.txt',
@@ -127,6 +129,26 @@ async function save_score_data(game) {
     log( chalk.bold.blue( 'No score game available.' ) );
     return true;
   }
+
+  let last_score_event = await get_latest_event(game, "score");
+  
+  if (last_score_event != false && last_score_event.id_code != last_score_id) {
+    let roster = null
+    if (last_score_event.team == "a")
+      roster = game.team.a.players
+    else if (last_score_event.team == "b")
+      roster = game.team.b.players
+    let last_score_player = null
+    if (roster != null) {
+      last_score_player = roster.find( player => player.number == last_score_event.player.number );
+    }
+    if (last_score_player != null) {
+      const csvContent = `Team,Number,Name\n${last_score_player.tournament_team.name},${last_score_player.number},${last_score_player.name}`;
+      await fs.writeFile( join( __dirname, '../Output/LastScore.csv' ), csvContent);
+      last_score_id = last_score_event.id_code;
+      log( chalk.bold( 'Last score is ' ) + chalk.bold.blue( last_score_player.tournament_team.name + ", " + last_score_player.number + " (" + last_score_player.name + ")" ) + chalk( ' ==> saved to file "LastScore.csv".' ) );
+    }
+  }
   let score_before = {
     left: null,
     right: null
@@ -189,24 +211,16 @@ async function get_score( game ) {
 
 async function save_penalty_data( game ) {
   
-  let penalty = await get_penalty_data( game );
+  let penalty = await get_latest_event( game, "penalty");
   if (penalty === false) {
     log(chalk.bold.blue('No penalty data available.'));
     return true;
   }
-  let penalty_before_id = null;
-  try {
-    penalty_before_id = fs.readFile( join( __dirname, 'penalty_before_id.txt'), 'utf8');
-  }
-  catch(err) {
-    penalty_before_id='';
-  }
+  
 
   if(penalty_before_id != penalty.id_code) {
-    
     fs.writeFile(join( __dirname, 'new_penalty.txt'), '1');
-
-    fs.writeFile(join( __dirname, 'penalty_before_id.txt'), penalty.id_code);
+    penalty_before_id = penalty.id_code;
     fs.writeFile(join( __dirname, 'penalty_team.txt'), penalty.team);
     fs.writeFile(join( __dirname, 'penalty_card.txt'), penalty.name.split("_")[1]);
     if (penalty.player.number != null)
@@ -227,10 +241,10 @@ async function save_penalty_data( game ) {
   }
 }
 
-async function get_penalty_data(game) {
+async function get_latest_event(game, event_name) {
   if (game.events.length > 0) {
     for ( const element of game.events.slice().reverse()) {
-      if (element.name.includes("penalty")) {
+      if (element.name.includes(event_name)) {
         return element;
       }
     }
