@@ -31,10 +31,7 @@ if __name__ == "__main__":
     open("quadballlive_api/gameidstonames_livestream.txt", "w").write("0")
     open("quadballlive_api/gameidstonames_scorecrawl.txt", "w").write("0")
     open("quadballlive_api/gameids_scorecrawl.txt", "w").write("0")
-    with open("Output/Penalty.csv","w") as file:
-        fieldnames = ["Name", "Team", "Reason", "Card"]
-        writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
-        writer.writeheader()
+    open("Output/Penalty.csv", "w").write("Team,Number,Name,Reason,Card\n-,-,-,-,-")
     open("Output/ScoreCrawl.csv", "w").write("Scorecrawl\n")
 
     app = QApplication(sys.argv)

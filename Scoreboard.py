@@ -111,10 +111,10 @@ class ScoreBoard:
             return
         else:
             with open("Output/Penalty.csv","w", encoding="utf-8-sig") as file:
-                fieldnames = ["Name", "Team", "Reason", "Card"]
+                fieldnames = ["Team", "Number", "Name", "Reason", "Card"]
                 writer = csv.DictWriter(file, fieldnames=fieldnames, lineterminator="\n", delimiter=",")
                 writer.writeheader()
-                writer.writerow({"Name": str(self.penalty["player"]), "Team": str(self.penalty["team"].name), "Reason": str(self.penalty["reason"]), "Card": str(self.penalty["card"])})
+                writer.writerow({"Team": str(self.penalty["team"].name), "Number": str(self.penalty["number"]), "Name": str(self.penalty["name"]), "Reason": str(self.penalty["reason"]), "Card": str(self.penalty["card"])})
 
             open("quadballlive_api/new_penalty.txt", "w").write("0")
             self.window.ui.new_penalty_label.setText("")

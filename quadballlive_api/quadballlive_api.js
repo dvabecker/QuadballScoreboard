@@ -139,7 +139,7 @@ async function save_score_data(game) {
     else if (last_score_event.team == "b")
       roster = game.team.b.players
     let last_score_player = null
-    if (roster != null) {
+    if (roster != null && last_score_event.player.number != null) {
       last_score_player = roster.find( player => player.number == last_score_event.player.number );
     }
     if (last_score_player != null) {
@@ -219,6 +219,7 @@ async function save_penalty_data( game ) {
   
 
   if(penalty_before_id != penalty.id_code) {
+    /*
     fs.writeFile(join( __dirname, 'new_penalty.txt'), '1');
     penalty_before_id = penalty.id_code;
     fs.writeFile(join( __dirname, 'penalty_team.txt'), penalty.team);
@@ -238,6 +239,28 @@ async function save_penalty_data( game ) {
     else
       fs.writeFile(join( __dirname, 'penalty_reason.txt'), '');
     log(chalk.bold('New penalty entry saved to penalty files "penalty_(...).txt".'));
+    */
+   
+    let roster = null
+    if (penalty.team == "a")
+      roster = game.team.a.players
+    else if (penalty.team == "b")
+      roster = game.team.b.players
+    let last_penalty_player = null
+    if (roster != null && penalty.player.number != null) {
+      last_penalty_player = roster.find( player => player.number == penalty.player.number );
+    }
+    if (last_penalty_player != null) {
+      penalty_before_id = penalty.id_code;
+      let penalty_reason = ''
+      if (penalty.reason != null)
+        penalty_reason = penalty.reason;
+      const csvContent = `Team,Number,Name,Reason,Card\n${last_penalty_player.tournament_team.name},${last_penalty_player.number},${last_penalty_player.name},${penalty_reason},${penalty.name.split("_")[1]}`;
+      await fs.writeFile( join( __dirname, '../Output/Penalty.csv' ), csvContent);
+      log( chalk.bold( 'Last penalty is ' ) + chalk.bold.blue( last_penalty_player.tournament_team.name + ", " + last_penalty_player.number + " (" + last_penalty_player.name + "): "+ penalty.name.split("_")[1] + " (" + penalty_reason + ")" ) + chalk( ' ==> saved to file "Output/Penalty.csv".' ) );
+
+    }
+
   }
 }
 

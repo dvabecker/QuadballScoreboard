@@ -47,10 +47,15 @@ class PenaltyWindow(QDialog):
         if self.ui.input_number.text() != "":
             if self.ui.input_number.text() in self.team.roster:
                 player = "{0} - {1}".format(self.ui.input_number.text(), self.team.roster[self.ui.input_number.text()])
+                name = self.team.roster[self.ui.input_number.text()]
+                number = self.ui.input_number.text()
             else:
                 player = "{0}".format(self.ui.input_number.text())
+                number = self.ui.input_number.text()
         else:
             player = self.ui.list_players.currentText()
+            number = player.split(" - ")[0]
+            name = player.split(" - ")[1]
         if self.ui.input_reason.text() != "":
             reason = self.ui.input_reason.text()
             if reason not in self.reasons:
@@ -72,10 +77,12 @@ class PenaltyWindow(QDialog):
         else:
             print("Please choose card")
             return None
-        self.scoreboard.penalty = {"player": player,
-                                   "reason": reason,
-                                   "team": self.team,
-                                   "card": card
-                                   }
+        self.scoreboard.penalty = {
+            "team": self.team,
+            "number": number,
+            "name": name,
+            "reason": reason,
+            "card": card
+        }
         self.scoreboard.write_penalty()
         self.accept()
